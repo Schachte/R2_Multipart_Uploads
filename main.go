@@ -30,10 +30,11 @@ func main() {
 		return
 	}
 	defer file.Close()
+
 	uploader := getUploader(ACCOUNT_ID, ACCESS_KEY, SECRET_KEY)
 	closer := writer(uploader)
-
 	buffer := make([]byte, 1024*5)
+
 	for {
 		_, err = file.Read(buffer)
 		if err != nil {
@@ -48,12 +49,10 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-
 		fmt.Printf("Wrote %d bytes\n", n)
 	}
 
 	closer.WriteCloser.Close()
-
 	time.Sleep(10 * time.Second)
 }
 
